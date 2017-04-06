@@ -1,8 +1,10 @@
 <factorypath>
-    <factorypathentry kind="PLUGIN" id="com.ibm.jee.ejb.annotations.processor" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="PLUGIN" id="com.ibm.ws.ast.wsfp.annotations.processor" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="PLUGIN" id="com.ibm.etools.webtools.jpa" enabled="true" runInBatchMode="false"/>
-    <factorypathentry kind="PLUGIN" id="com.ibm.datatools.javatool.core" enabled="false" runInBatchMode="false"/>
+    <factorypathentry kind="PLUGIN" id="com.ibm.jee.annotations.processor" enabled="true" runInBatchMode="false"/>
     <factorypathentry kind="PLUGIN" id="com.ibm.jaxrs.annotations.processor" enabled="false" runInBatchMode="false"/>
-    <factorypathentry kind="EXTJAR" id="/opt/IBM/SDP/runtimes/base_v7/feature_packs/jpa/plugins/com.ibm.ws.jpa.jar" enabled="true" runInBatchMode="false"/>
+    <factorypathentry kind="EXTJAR" id="/opt/IBM/SDP/runtimes/base_v7/feature_packs/jpa/plugins/com.ibm.ws.jpa.jar" enabled="false" runInBatchMode="false"/>
+    <factorypathentry kind="PLUGIN" id="com.ibm.adapter.j2c.codegen" enabled="false" runInBatchMode="false"/>
+    <factorypathentry kind="PLUGIN" id="com.ibm.etools.javaee.cdi.ext.ui" enabled="false" runInBatchMode="false"/>
+    <factorypathentry kind="PLUGIN" id="com.ibm.etools.webtools.jpa.managerbean" enabled="false" runInBatchMode="false"/>
+    <factorypathentry kind="EXTJAR" id="/home/vagrant/IBM/WebSphere85/AppServer/plugins/com.ibm.ws.jpa.jar" enabled="true" runInBatchMode="false"/>
 </factorypath>

@@ -1,8 +1,9 @@
+# Commenting first line
 # OS X metadata files
 .DS_Store
 
 # Compiled class file
-*.class
+**/*.class
 
 # Log file
 *.log
@@ -23,3 +24,6 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# RAD metadata
+.metadata/

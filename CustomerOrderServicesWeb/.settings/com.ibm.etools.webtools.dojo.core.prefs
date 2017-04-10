@@ -1,9 +1,16 @@
-#Tue Jan 25 19:05:55 EST 2011
-dojo-root=/CustomerOrderServicesWeb/WebContent/dojo
+dojo-args-attribute-name=args
+dojo-attach-event-attribute-name=dojoAttachEvent
+dojo-attach-point-attribute-name=dojoAttachPoint
 dojo-bootstrap-js=dojo/dojo.js
+dojo-config-attribute-name=djConfig
 dojo-css=dojo/resources/dojo.css
-eclipse.preferences.version=1
-dojo-type-attribute-name=dojotype
 dojo-dijit-css=dijit/themes/dijit.css
+dojo-event-attribute-name=event
+dojo-id-attribute-name=jsId
+dojo-props-attribute-name=DOJO-SETTINGS-NO-VALUE
+dojo-root=/CustomerOrderServicesWeb/WebContent/dojo
 dojo-source-metadata-root=/CustomerOrderServicesWeb/WebContent/dojo
 dojo-theme-css=dijit/themes/tundra/tundra.css
+dojo-type-attribute-name=dojoType
+dojo-version-attribute-name=1.5.0 (22487)
+eclipse.preferences.version=1

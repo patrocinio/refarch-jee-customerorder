@@ -1,8 +1,16 @@
+# Commenting first line
 # OS X metadata files
 .DS_Store
 
 # Compiled class file
-*.class
+**/*.class
+CustomerOrderServices/ejbModule/org/pwte/example/domain/*.class
+CustomerOrderServices/ejbModule/org/pwte/example/exception/*.class
+CustomerOrderServices/ejbModule/org/pwte/example/service/*.class
+CustomerOrderServicesTest/WebContent/WEB-INF/classes/org/pwte/example/jaxrs/test/*.class
+CustomerOrderServicesTest/WebContent/WEB-INF/classes/org/pwte/example/jpa/test/*.class
+CustomerOrderServicesWeb/WebContent/WEB-INF/classes/org/pwte/example/app/*.class
+CustomerOrderServicesWeb/WebContent/WEB-INF/classes/org/pwte/example/resources/*.class
 
 # Log file
 *.log
@@ -23,3 +31,6 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# RAD metadata
+.metadata/

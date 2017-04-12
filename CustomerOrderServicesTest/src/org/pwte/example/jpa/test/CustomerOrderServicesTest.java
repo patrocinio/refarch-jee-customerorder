@@ -47,10 +47,10 @@ public class CustomerOrderServicesTest extends DBTestCase{
 	{
 		super(name); 
 		System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "com.ibm.db2.jcc.DB2Driver" );
-	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:db2://localhost:60000/ORDERDB" );
+	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:db2://localhost:50000/ORDERDB" );
 	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_SCHEMA, "DB2INST1" );
 	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "db2inst1" );
-	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "was1edu2" );
+	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "db2inst1-pwd" );
 	}
 	
 	

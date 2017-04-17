@@ -22,7 +22,7 @@ public class ResidentialCustomer extends AbstractCustomer implements
 	
 	
 	@Column(name="RESIDENTIAL_FREQUENT_CUSTOMER")
-	protected boolean frequentCustomer;
+	protected String frequentCustomer;
 
 
 	public short getHouseholdSize() {
@@ -36,11 +36,11 @@ public class ResidentialCustomer extends AbstractCustomer implements
 
 
 	public boolean isFrequentCustomer() {
-		return frequentCustomer;
+		return "Y".equals(frequentCustomer);
 	}
 
 
-	public void setFrequentCustomer(boolean frequentCustomer) {
+	public void setFrequentCustomer(String frequentCustomer) {
 		this.frequentCustomer = frequentCustomer;
 	}
 

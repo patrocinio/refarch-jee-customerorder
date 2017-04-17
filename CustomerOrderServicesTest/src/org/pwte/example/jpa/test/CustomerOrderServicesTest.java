@@ -46,11 +46,21 @@ public class CustomerOrderServicesTest extends DBTestCase{
 	public CustomerOrderServicesTest(String name)
 	{
 		super(name); 
-		System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "com.ibm.db2.jcc.DB2Driver" );
-	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:db2://localhost:50000/ORDERDB" );
-	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_SCHEMA, "DB2INST1" );
-	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "db2inst1" );
-	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "db2inst1-pwd" );
+		// Old hard-coded DB properties
+		//System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "com.ibm.db2.jcc.DB2Driver" );
+	    //System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:db2://localhost:50000/ORDERDB" );
+	    //System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_SCHEMA, "DB2INST1" );
+	    //System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "db2inst1" );
+	    //System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "db2inst1-pwd" );
+		
+		// Grab properties values from WebSphere JVM custom variables
+		System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, System.getProperty("DBUNIT_DRIVER_CLASS") );
+	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, System.getProperty("DBUNIT_CONNECTION_URL") );
+	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_SCHEMA, System.getProperty("DBUNIT_SCHEMA") );
+	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, System.getProperty("DBUNIT_USERNAME") );
+	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, System.getProperty("DBUNIT_PASSWORD") );
+	    
+	   
 	}
 	
 	

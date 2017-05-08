@@ -6,7 +6,9 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.naming.Context;
 import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 import org.dbunit.DBTestCase;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
@@ -25,12 +27,39 @@ public class ProductSearchServiceTest extends DBTestCase {
 	private ProductSearchService productSearchService;
 	
 	public ProductSearchServiceTest(String name) {
+		
 		super(name);
-		System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, "com.ibm.db2.jcc.DB2Driver" );
-	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, "jdbc:db2://localhost:60000/ORDERDB" );
-	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_SCHEMA, "DB2INST1" );
-	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, "db2inst1" );
-	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, "was1edu2" );
+		
+		String DBUNIT_DRIVER_CLASS = "";
+		String DBUNIT_CONNECTION_URL = "";
+		String DBUNIT_SCHEMA = "";
+		String DBUNIT_USERNAME = "";
+		String DBUNIT_PASSWORD = "";
+		
+		 try {
+			 Context envEntryContext = (Context) new InitialContext().lookup("java:comp/env");
+			 
+			 DBUNIT_DRIVER_CLASS = (String) envEntryContext.lookup("DBUNIT_DRIVER_CLASS");
+			 DBUNIT_CONNECTION_URL = (String) envEntryContext.lookup("DBUNIT_CONNECTION_URL");
+			 DBUNIT_SCHEMA = (String) envEntryContext.lookup("DBUNIT_SCHEMA");
+			 DBUNIT_USERNAME = (String) envEntryContext.lookup("DBUNIT_USERNAME");
+			 DBUNIT_PASSWORD = (String) envEntryContext.lookup("DBUNIT_PASSWORD");
+			 
+		 } catch (NamingException e) {
+			 e.printStackTrace();
+			 
+			 DBUNIT_DRIVER_CLASS = "com.ibm.db2.jcc.DB2Driver";
+			 DBUNIT_CONNECTION_URL = "jdbc:db2://localhost:50000/ORDERDB";
+			 DBUNIT_SCHEMA = "DB2INST1";
+			 DBUNIT_USERNAME = "db2inst1";
+			 DBUNIT_PASSWORD = "password";
+		 }
+		 
+		 System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, DBUNIT_DRIVER_CLASS );
+		 System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, DBUNIT_CONNECTION_URL );
+		 System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_SCHEMA, DBUNIT_SCHEMA );
+		 System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, DBUNIT_USERNAME );
+		 System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, DBUNIT_PASSWORD );
 	}
 	
 	public void setUp() throws Exception {

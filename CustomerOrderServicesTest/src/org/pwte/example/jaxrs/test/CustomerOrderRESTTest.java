@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -21,13 +25,23 @@ import junit.framework.TestCase;
 
 public class CustomerOrderRESTTest extends TestCase {
 
-	private static String urlPrefix = "https://localhost:9443/CustomerOrderServicesWeb/";
-	private static String urlTestPrefix = "http://localhost:9080/CustomerOrderServicesTest/";
+	private static String urlPrefix;
+	private static String urlTestPrefix;
 	private ClientConfig config = new ApacheHttpClientConfig();
 	private ClientConfig config2 = new ApacheHttpClientConfig();
 		
 	public void setUp() throws Exception 
 	{
+		try {
+			Context envEntryContext = (Context) new InitialContext().lookup("java:comp/env");
+			urlPrefix = (String) envEntryContext.lookup("CUSTOMER_ORDER_SERVICES_WEB_ENDPOINT");
+			urlTestPrefix = (String) envEntryContext.lookup("CUSTOMER_ORDER_SERVICES_TEST_ENDPOINT");
+		} catch (NamingException e) {
+			 e.printStackTrace();
+			 urlPrefix = "https://localhost:9443/CustomerOrderServicesWeb/";
+			 urlTestPrefix = "http://localhost:9080/CustomerOrderServicesTest/";
+		}
+		
 		BasicAuthSecurityHandler basicAuth = new BasicAuthSecurityHandler();
 		basicAuth.setUserName("rbarcia");
 		basicAuth.setPassword("bl0wfish");

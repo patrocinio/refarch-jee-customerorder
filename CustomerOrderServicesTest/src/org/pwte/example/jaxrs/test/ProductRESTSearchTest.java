@@ -2,6 +2,10 @@ package org.pwte.example.jaxrs.test;
 
 import junit.framework.TestCase;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+
 import org.apache.wink.client.Resource;
 import org.apache.wink.client.RestClient;
 
@@ -10,7 +14,18 @@ import com.ibm.json.java.JSONObject;
 
 public class ProductRESTSearchTest extends TestCase {
 	
-	private static String urlPrefix = "http://localhost:9081/CustomerOrderServicesWeb/";
+	private static String urlPrefix;
+	
+	public void setUp() throws Exception {
+		try {
+			Context envEntryContext = (Context) new InitialContext().lookup("java:comp/env");
+			urlPrefix = (String) envEntryContext.lookup("CUSTOMER_ORDER_SERVICES_WEB_ENDPOINT");
+		} 
+		catch (NamingException e) {
+			e.printStackTrace();
+			urlPrefix = "https://localhost:9443/CustomerOrderServicesWeb/";
+		}
+	}
 	
 	public void testProductResources() 
 	{

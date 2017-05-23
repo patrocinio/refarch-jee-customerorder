@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="CustomerOrderServices">
 	
+	<!-- WAS/JTA persistence -->
+	
+	<!-- <persistence-unit name="CustomerOrderServices">
 		   <jta-data-source>jdbc/orderds</jta-data-source>
 		   <class>org.pwte.example.domain.Product</class>
 		   <class>org.pwte.example.domain.AbstractCustomer</class>
@@ -18,5 +20,37 @@
 				    value="StoreEnumOrdinal=false" />
 			<property name="openjpa.jdbc.DBDictionary" value="db2" />
 		   </properties>
+	</persistence-unit>-->
+	
+	
+	
+	<!--  UNIT TEST Persistence -->
+	
+	<persistence-unit name="h2_unitTest" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>org.pwte.example.domain.Product</class>
+		<class>org.pwte.example.domain.AbstractCustomer</class>
+		<class>org.pwte.example.domain.BusinessCustomer</class>
+		<class>org.pwte.example.domain.ResidentialCustomer</class>
+		<class>org.pwte.example.domain.Order</class>
+		<class>org.pwte.example.domain.LineItem</class>
+		<class>org.pwte.example.domain.LineItemId</class>
+		<class>org.pwte.example.domain.Category</class>
+		<class>org.pwte.example.domain.Address</class>
+		<properties>
+			<!-- Configuring JDBC properties -->
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:ORDERDB;DB_CLOSE_DELAY=-1"/>
+            <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
+            <property name="javax.persistence.jdbc.user" value="sa"/>
+      		<property name="javax.persistence.jdbc.password" value=""/>
+			
+			<!-- Hibernate properties -->
+			<property name="hibernate.archive.autodetection" value="class" />
+			<property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
+			<!--<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
+			 <property name="hibernate.connection.driver_class" value="org.h2.Driver" />
+			<property name="hibernate.connection.url" value="jdbc:h2:mem:ORDERDB" />
+			<property name="hibernate.connection.user" value="sa" />-->
+		</properties>
 	</persistence-unit>
 </persistence>

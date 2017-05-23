@@ -5,7 +5,9 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 
 import org.pwte.example.domain.Category;
@@ -16,10 +18,18 @@ import org.pwte.example.exception.ProductDoesNotExistException;
 @Stateless
 public class ProductSearchServiceImpl implements ProductSearchService {
 
-	@PersistenceContext
-	protected EntityManager em;
+	
+	// May not need to create the entity manager factory due to injection at EJB Container creation time
+	//@PersistenceUnit(unitName = "h2_unitTest")
+	//protected EntityManagerFactory emf;
+	
+	@PersistenceContext(unitName = "h2_unitTest")
+	protected EntityManager em;// = emf.createEntityManager();
+	
 	
 	public Category loadCategory(int categoryId)throws CategoryDoesNotExist {
+		if (em == null) System.out.println("NULL NULL NULL NULL");
+		System.out.println("IS OPEN: " + em.isOpen());
 		Category category = em.find(Category.class, categoryId);
 		if(category == null) throw new CategoryDoesNotExist();
 		return category;

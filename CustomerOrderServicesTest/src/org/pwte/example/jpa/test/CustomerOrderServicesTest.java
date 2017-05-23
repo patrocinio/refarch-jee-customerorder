@@ -20,6 +20,8 @@ import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
 import org.dbunit.operation.DatabaseOperation;
+import org.h2.tools.RunScript;
+import org.junit.BeforeClass;
 import org.pwte.example.domain.AbstractCustomer;
 import org.pwte.example.domain.Address;
 import org.pwte.example.domain.LineItem;
@@ -41,6 +43,18 @@ public class CustomerOrderServicesTest extends DBTestCase{
 	private CustomerOrderServices customerOrderServices;
 	private int customerId = 2;
 	private int businessCustomerId = 3;
+	private static final String JDBC_DRIVER = org.h2.Driver.class.getName();
+	private static String JDBC_URL = "jdbc:h2:mem:ORDERDB;DB_CLOSE_DELAY=-1";
+	private static final String USER = "test_user";
+	private static final String PASSWORD = "";
+	
+	@BeforeClass
+	public static void createSchema() throws Exception {
+		RunScript.execute(JDBC_URL, USER, PASSWORD, "createOrderDB.sql", null, false);
+		JDBC_URL = "jdbc:h2:mem:INDB;DB_CLOSE_DELAY=-1";
+		RunScript.execute(JDBC_URL, USER, PASSWORD, "InventoryDdl.sql", null, false);
+		RunScript.execute(JDBC_URL, USER, PASSWORD, "InventoryData.sql", null, false);
+	}
 	
 	public CustomerOrderServicesTest(String name)
 	{
@@ -52,7 +66,7 @@ public class CustomerOrderServicesTest extends DBTestCase{
 		String DBUNIT_USERNAME = "";
 		String DBUNIT_PASSWORD = "";
 		
-		try {
+		/*try {
 			Context envEntryContext = (Context) new InitialContext().lookup("java:comp/env");
 			
 			DBUNIT_DRIVER_CLASS = (String) envEntryContext.lookup("DBUNIT_DRIVER_CLASS");
@@ -69,7 +83,7 @@ public class CustomerOrderServicesTest extends DBTestCase{
 			DBUNIT_SCHEMA = "DB2INST1";
 			DBUNIT_USERNAME = "DB2INST1";
 			DBUNIT_PASSWORD = "password";
-		}
+		}*/
 		
 		System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, DBUNIT_DRIVER_CLASS );
 	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, DBUNIT_CONNECTION_URL );

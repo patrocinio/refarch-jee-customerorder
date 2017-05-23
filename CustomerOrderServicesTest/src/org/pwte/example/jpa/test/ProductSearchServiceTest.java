@@ -1,92 +1,87 @@
 package org.pwte.example.jpa.test;
 
+import static org.junit.Assert.*;
+
+import java.io.File;
 import java.io.InputStream;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.ejb.*;
+import javax.ejb.embeddable.EJBContainer;
 
+import org.junit.*;
 import org.dbunit.DBTestCase;
+import org.dbunit.IDatabaseTester;
+import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.PropertiesBasedJdbcDatabaseTester;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.ITable;
 import org.dbunit.dataset.ReplacementDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSet;
+import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
+import org.h2.tools.RunScript;
 import org.pwte.example.domain.Category;
 import org.pwte.example.domain.Product;
 import org.pwte.example.service.ProductSearchService;
+import org.pwte.example.service.ProductSearchServiceImpl;
 
-public class ProductSearchServiceTest extends DBTestCase {
+public class ProductSearchServiceTest {
 
+	private static Context ctx;
+	private static EJBContainer ejbContainer;
+	private static ProductSearchService productSearchService;
+	private static final String JDBC_DRIVER = org.h2.Driver.class.getName();
+	private static final String JDBC_URL = "jdbc:h2:mem:ORDERDB;DB_CLOSE_DELAY=-1";
+	private static final String USER = "sa";
+	private static final String PASSWORD = "";
 	
-	private ProductSearchService productSearchService;
-	
-	public ProductSearchServiceTest(String name) {
-		super(name);
-
-		String DBUNIT_DRIVER_CLASS = "";
-		String DBUNIT_CONNECTION_URL = "";
-		String DBUNIT_SCHEMA = "";
-		String DBUNIT_USERNAME = "";
-		String DBUNIT_PASSWORD = "";
 		
-		try {
-			Context envEntryContext = (Context) new InitialContext().lookup("java:comp/env");
+		
+		@BeforeClass
+		public static void createSchema() throws Exception {
+			// Create ORDER DB
+			String createOrderDB = "classpath:/org/pwte/example/jpa/test/sql/createOrderDB.sql";
+			RunScript.execute(JDBC_URL, USER, PASSWORD, createOrderDB, null, false);
 			
-			DBUNIT_DRIVER_CLASS = (String) envEntryContext.lookup("DBUNIT_DRIVER_CLASS");
-			DBUNIT_CONNECTION_URL = (String) envEntryContext.lookup("DBUNIT_CONNECTION_URL");
-			DBUNIT_SCHEMA = (String) envEntryContext.lookup("DBUNIT_SCHEMA");
-			DBUNIT_USERNAME = (String) envEntryContext.lookup("DBUNIT_USERNAME");
-			DBUNIT_PASSWORD = (String) envEntryContext.lookup("DBUNIT_PASSWORD");
+			//Create EJB Container
+			Properties properties = new Properties();
+	        properties.setProperty(EJBContainer.MODULES, "CustomerOrderServices");
+	        properties.setProperty(EJBContainer.PROVIDER, "com.ibm.websphere.ejbcontainer.EmbeddableContainerProvider");
+			ejbContainer = javax.ejb.embeddable.EJBContainer.createEJBContainer(properties);
 			
-		} catch (NamingException e) {
-			e.printStackTrace();
-			
-			DBUNIT_DRIVER_CLASS = "com.ibm.db2.jcc.DB2Driver";
-			DBUNIT_CONNECTION_URL = "jdbc:db2://localhost:50000/ORDERDB";
-			DBUNIT_SCHEMA = "DB2INST1";
-			DBUNIT_USERNAME = "DB2INST1";
-			DBUNIT_PASSWORD = "password";
+			// Get the EJB
+			ctx = ejbContainer.getContext();
+		    productSearchService = (ProductSearchService) ctx.lookup("java:global/classes/ProductSearchServiceImpl");
+		}
+
+		@Before
+		public void importDataSet() throws Exception {
+			IDataSet dataSet = readDataSet();
+			cleanlyInsert(dataSet);
+		}
+
+		private IDataSet readDataSet() throws Exception {
+			FlatXmlDataSetBuilder flatXmlDataSetBuilder = new FlatXmlDataSetBuilder();
+			flatXmlDataSetBuilder.setColumnSensing(true);
+			return  flatXmlDataSetBuilder.build(new File("src/org/pwte/example/jpa/test/xml/CustomerOrderInitialDataSet.xml"));
+		}
+
+		private void cleanlyInsert(IDataSet dataSet) throws Exception {
+			IDatabaseTester databaseTester = new JdbcDatabaseTester(JDBC_DRIVER, JDBC_URL, USER, PASSWORD);
+			databaseTester.setSetUpOperation(DatabaseOperation.CLEAN_INSERT);
+			databaseTester.setDataSet(dataSet);
+			databaseTester.onSetup();
 		}
 		
-		System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_DRIVER_CLASS, DBUNIT_DRIVER_CLASS );
-	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_CONNECTION_URL, DBUNIT_CONNECTION_URL );
-	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_SCHEMA, DBUNIT_SCHEMA );
-	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_USERNAME, DBUNIT_USERNAME );
-	    System.setProperty( PropertiesBasedJdbcDatabaseTester.DBUNIT_PASSWORD, DBUNIT_PASSWORD );
 		
-	}
-	
-	public void setUp() throws Exception {
-		
-		super.setUp();
-		InitialContext ctx = new InitialContext();
-		productSearchService = (ProductSearchService)ctx.lookup("java:comp/env/ejb/ProductSearchService");
-		
-	}
-	
-	@Override
-	protected IDataSet getDataSet() throws Exception {
-		ReplacementDataSet dataSet = new ReplacementDataSet(
-		        new FlatXmlDataSet(this.getClass().getResourceAsStream ("CustomerOrderInitialDataSet.xml"))); 
-		dataSet.addReplacementObject("[null]", null);
-		return dataSet;
-	}
-	
-	protected DatabaseOperation getSetUpOperation() 
-	  throws Exception {
-	    return DatabaseOperation.CLEAN_INSERT;
-	 }
-	
-	protected DatabaseOperation getTearDownOperation() 
-	  throws Exception {
-		return DatabaseOperation.NONE;
-	}
-
+	@Test	
 	public void testLoadCategory() {
 		try
 		{

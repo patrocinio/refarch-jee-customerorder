@@ -70,6 +70,7 @@
           <earSourceDirectory>${basedir}</earSourceDirectory>
           <earSourceIncludes>**/ibmconfig/**,**/ibm-application-bnd.xml</earSourceIncludes>
           <earSourceExcludes>**/target/**</earSourceExcludes>
+          <finalName>${artifactId}</finalName>
           <security>
             <security-role>
               <role-name>SecureShopper</role-name>

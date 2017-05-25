@@ -3,32 +3,31 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.pwte.example</groupId>
   <artifactId>CustomerOrderServicesApp</artifactId>
-  <version>1.0</version>
   <name>CustomerOrderServicesApp</name>
   <packaging>ear</packaging>
   <parent>
     <artifactId>project</artifactId>
     <groupId>org.pwte.example</groupId>
-    <version>1.0</version>
+    <version>1.1.0-SNAPSHOT</version>
     <relativePath>../CustomerOrderServicesProject</relativePath>
   </parent>
   <dependencies>
     <dependency>
       <groupId>org.pwte.example</groupId>
       <artifactId>CustomerOrderServices</artifactId>
-      <version>1.0</version>
+      <version>${project.version}</version>
       <type>ejb</type>
     </dependency>
     <dependency>
       <groupId>org.pwte.example</groupId>
       <artifactId>CustomerOrderServicesWeb</artifactId>
-      <version>1.0</version>
+      <version>${project.version}</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>org.pwte.example</groupId>
       <artifactId>CustomerOrderServicesTest</artifactId>
-      <version>1.0</version>
+      <version>${project.version}</version>
       <type>war</type>
     </dependency>
   </dependencies>

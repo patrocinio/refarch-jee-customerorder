@@ -8,7 +8,7 @@
   <parent>
     <artifactId>project</artifactId>
     <groupId>org.pwte.example</groupId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
     <relativePath>../CustomerOrderServicesProject</relativePath>
   </parent>
   <properties>

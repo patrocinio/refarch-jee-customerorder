@@ -7,10 +7,15 @@ pipeline {
     stages {
         stage('Compile') {
             steps {
-                git branch: 'pipeline-tests-integration', credentialsId: '83c58be8-3bb5-49a7-9bf2-947b898785ab', url: 'git@github.ibm.com:CASE/refarch-jee-customerorder'
-                sh "cd CustomerOrderServicesProject ; mvn clean install"
+                sh "cd CustomerOrderServicesProject ; mvn clean install -DskipTests"
             }
         
+        }
+        
+        stage('Unit-Test') {
+            steps {
+                sh 'echo "When we grow up we will put some unit tests here...."'
+            }
         }
         
         stage('Deploy') {
@@ -41,6 +46,12 @@ pipeline {
                         deployOnlyChanged: false
                     ]
                 ])
+            }
+        }
+        
+        stage('Integration Tests') {
+            steps {
+                sh 'echo "Later we defenitely will run some integration tests here! I promise!"'
             }
         }
     }

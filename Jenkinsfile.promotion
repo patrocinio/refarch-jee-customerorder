@@ -1,0 +1,10 @@
+node {
+    git branch: 'master', credentialsID: '83c58be8-3bb5-49a7-9bf2-947b898785ab', url: 'git@github.ibm.com:CASE/refarch-jee-customerorder.git'
+    
+    stage('Scan repository') {
+        sh '''
+            #!/bin/bash
+            git branches -a
+        '''
+    }   
+}

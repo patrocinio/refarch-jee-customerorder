@@ -8,7 +8,7 @@
 	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry exported="true" kind="con" path="com.ibm.ast.ws.jaxrs.internal.project.facet.v7.jaxrs11.v112.jaxrslibrarycontainer">
+	<classpathentry kind="con" path="com.ibm.ast.ws.jaxrs.internal.project.facet.v7.jaxrs11.v112.jaxrslibrarycontainer">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>

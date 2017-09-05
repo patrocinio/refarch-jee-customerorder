@@ -40,4 +40,4 @@ spec:
         - configMapRef:
             name: ldap 
       imagePullSecrets:
-      - name: user1.registrykey
+      - name: eduardop.registrykey
